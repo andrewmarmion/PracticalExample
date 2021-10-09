@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct PracticalExampleApp: App {
+
+    let viewModel = ViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(viewModel)
         }
+        .commands {
+            SidebarCommands()
+        }
+
     }
 }
