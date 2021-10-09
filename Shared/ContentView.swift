@@ -18,6 +18,7 @@ struct ItemAttributes: Decodable {
     let description: String
     let content_type: ContentType
     let card_artwork_url: URL
+    let released_at: Date
 }
 
 struct FeedItems: Decodable {
@@ -32,14 +33,18 @@ struct FeedItems: Decodable {
 
 enum LoadingState {
     case loading
-    case loaded([FeedItems.FeedItem])
+    case loaded
     case error(Error)
 }
 
 class ViewModel: ObservableObject {
 
     @Published var state: LoadingState = .loading
+    @Published var selectedList: SelectedList = .all
+    @Published var items: [FeedItems.FeedItem] = []
 
+    private var articles: [FeedItems.FeedItem] = []
+    private var videos: [FeedItems.FeedItem] = []
     private var cancellables = Set<AnyCancellable>()
 
     init() {
@@ -47,25 +52,77 @@ class ViewModel: ObservableObject {
     }
 
     func load() {
+        let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/articles.json")!
 
-        let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/videos.json")!
+        let videosURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/videos.json")!
 
-        URLSession.shared.dataTaskPublisher(for: articlesURL)
-            .tryMap { $0.data }
-            .decode(type: FeedItems.self, decoder: JSONDecoder())
+        let articlePublisher = publisher(for: articlesURL)
+        let videoPublisher = publisher(for: videosURL)
+
+        articlePublisher
+            .combineLatest(videoPublisher)
+            .receive(on: DispatchQueue.main)
             .sink { completion in
-                switch completion {
-                case .failure(let error):
+                if case let .failure(error) = completion {
                     self.state = .error(error)
-                case .finished:
-                    break
                 }
-
-            } receiveValue: { [weak self] value in
-                self?.state = .loaded(value.data)
+            } receiveValue: { [weak self] articles, videos in
+                self?.articles = articles.dateSorted()
+                self?.videos = videos.dateSorted()
+                self?.selectedList = .all
+                self?.state = .loaded
             }
             .store(in: &cancellables)
 
+        $selectedList
+            .sink { [weak self] selection in
+                self?.handle(selectedList: selection)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func publisher(for url: URL) -> AnyPublisher<[FeedItems.FeedItem], Error> {
+        URLSession.shared.dataTaskPublisher(for: url)
+            .tryMap { $0.data }
+            .decode(type: FeedItems.self, decoder: decoder())
+            .map { $0.data }
+            .eraseToAnyPublisher()
+    }
+
+    private func handle(selectedList: SelectedList) {
+        switch selectedList {
+        case .all: self.items = (self.articles + self.videos).dateSorted()
+        case .articles: self.items = self.articles
+        case .videos: self.items = self.videos
+        }
+    }
+
+    private func decoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.customDate)
+        return decoder
+    }
+}
+
+extension DateFormatter {
+    static let customDate: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        return formatter
+    }()
+}
+
+enum SelectedList {
+    case all
+    case articles
+    case videos
+}
+
+extension Array where Element == FeedItems.FeedItem {
+    func dateSorted() -> [Element] {
+        self.sorted { first, second in
+            first.attributes.released_at < second.attributes.released_at
+        }
     }
 }
 
@@ -74,13 +131,30 @@ struct ContentView: View {
     @StateObject var viewModel = ViewModel()
 
     var body: some View {
-        switch viewModel.state {
-        case .error(let error):
-            Text("Loading error \(error.localizedDescription)")
-        case .loaded(let items):
-            ListView(items: items)
-        case .loading:
-            Text("Loading")
+        NavigationView {
+            Group {
+                switch viewModel.state {
+                case .error(let error):
+                    Text("Loading error \(error.localizedDescription)")
+
+                case .loaded:
+
+                    VStack {
+                        Picker("List", selection: $viewModel.selectedList) {
+                            Text("All").tag(SelectedList.all)
+                            Text("Articles").tag(SelectedList.articles)
+                            Text("Videos").tag(SelectedList.videos)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        ListView(items: viewModel.items)
+                           // consider using a toolbar to place the SegmentedController in the navigation
+                    }
+
+                case .loading:
+                    Text("Loading")
+                }
+            }
+            .navigationTitle("Courses")
         }
     }
 }
@@ -126,23 +200,26 @@ struct ListView: View {
 struct ItemImage: View {
     let url: URL
     var body: some View {
-        AsyncImage(url: url) { image in
-            image
-                .resizable()
-                .scaledToFit()
-        } placeholder: {
-            ZStack {
-                ProgressView()
-                Color.gray.opacity(0.1)
+        // TODO: AsyncImage is not available in macOS 11.3 so we need to roll our own version of it
+        if #available(iOS 15.0, *) {
+            AsyncImage(url: url) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+            } placeholder: {
+                ZStack {
+                    ProgressView()
+                    Color.gray.opacity(0.1)
+                }
             }
+        } else {
+            Image(systemName: "xmark.octagon.fill")
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            ContentView()
-        }
+        ContentView()
     }
 }
