@@ -150,26 +150,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
             return nil
         }
     }
-
-    private func anyURL() -> URL {
-        URL(string: "https://any-url.com")!
-    }
-
-    private func anyData() -> Data {
-        Data("any data".utf8)
-    }
-
-    private func anyNSError() -> NSError {
-        NSError(domain: "any error", code: 0)
-    }
-
-    private func nonHTTPURLResponse() -> URLResponse {
-        URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
-    }
-
-    private func anyHTTPURLResponse() -> HTTPURLResponse {
-        HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)!
-    }
 }
 
 // Subclass URLProtocol
