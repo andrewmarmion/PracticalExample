@@ -19,10 +19,18 @@ struct FeedItem: Decodable, Identifiable {
 
 struct ItemAttributes: Decodable {
     let name: String
-    let description: String // is html in the videos, do we need to handle that?
-    let content_type: ContentType
-    let card_artwork_url: URL
-    let released_at: Date
+    let description: String
+    let contentType: ContentType
+    let cardArtworkURL: URL
+    let releasedAt: Date
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case description
+        case contentType = "content_type"
+        case cardArtworkURL = "card_artwork_url"
+        case releasedAt = "released_at"
+    }
 }
 
 enum ContentType: String, Decodable {

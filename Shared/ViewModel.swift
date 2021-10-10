@@ -8,16 +8,6 @@
 import Combine
 import SwiftUI
 
-struct DisplayItem: Identifiable {
-    let id: String
-    let name: String
-    let description: String
-    let imageURL: URL
-    let releasedDateString: String
-    let releasedDate: Date
-    let itemTypeImage: String
-}
-
 enum SelectedList: String, CaseIterable, Identifiable {
     case all
     case articles
@@ -125,10 +115,10 @@ class ViewModel: ObservableObject {
             id: feedItem.id,
             name: feedItem.attributes.name,
             description: feedItem.attributes.description,
-            imageURL: feedItem.attributes.card_artwork_url,
-            releasedDateString: feedItem.attributes.released_at.display(),
-            releasedDate: feedItem.attributes.released_at,
-            itemTypeImage: getImageName(for: feedItem.attributes.content_type)
+            imageURL: feedItem.attributes.cardArtworkURL,
+            releasedDateString: feedItem.attributes.releasedAt.display(),
+            releasedDate: feedItem.attributes.releasedAt,
+            itemTypeImage: getImageName(for: feedItem.attributes.contentType)
         )
     }
 }

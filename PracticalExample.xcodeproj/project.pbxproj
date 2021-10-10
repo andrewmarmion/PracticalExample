@@ -39,6 +39,8 @@
 		2DB0066727120CB400825BC7 /* FeedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066527120CB400825BC7 /* FeedItems.swift */; };
 		2DB0066927120CE600825BC7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066827120CE600825BC7 /* Helpers.swift */; };
 		2DB0066A27120CE600825BC7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066827120CE600825BC7 /* Helpers.swift */; };
+		2DB0066C2712E10C00825BC7 /* DisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066B2712E10C00825BC7 /* DisplayItem.swift */; };
+		2DB0066D2712E10C00825BC7 /* DisplayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066B2712E10C00825BC7 /* DisplayItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,7 @@
 		2DB0066127120C5B00825BC7 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		2DB0066527120CB400825BC7 /* FeedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItems.swift; sourceTree = "<group>"; };
 		2DB0066827120CE600825BC7 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		2DB0066B2712E10C00825BC7 /* DisplayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				2DB0066527120CB400825BC7 /* FeedItems.swift */,
+				2DB0066B2712E10C00825BC7 /* DisplayItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -315,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DB006202711954600825BC7 /* ContentView_iOS.swift in Sources */,
+				2DB0066C2712E10C00825BC7 /* DisplayItem.swift in Sources */,
 				2DB006442711E67800825BC7 /* Helpers_iOS.swift in Sources */,
 				2DB0065B271204BA00825BC7 /* ImageLoader.swift in Sources */,
 				2DB0063C2711E20300825BC7 /* MainView.swift in Sources */,
@@ -337,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DB0063A2711E1AE00825BC7 /* ContentView_macOS.swift in Sources */,
+				2DB0066D2712E10C00825BC7 /* DisplayItem.swift in Sources */,
 				2DB0063D2711E20300825BC7 /* MainView.swift in Sources */,
 				2DB0065D271208C200825BC7 /* ItemImageView.swift in Sources */,
 				2DB0065C271204BA00825BC7 /* ImageLoader.swift in Sources */,
