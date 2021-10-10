@@ -24,6 +24,16 @@ final class ViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedList, .all)
     }
 
+    func test_load_successInFeedLoaderWithEmptyListsCreatesLoadedState() {
+        let feedLoader = StubbedFeedLoader(stubbedResponse: StubbedFeedLoader.publishesSuccessResponse())
+        let sut = ViewModel(feedLoader: feedLoader)
+
+        sut.load()
+
+        XCTAssertEqual(sut.state, .loaded)
+        XCTAssertEqual(sut.items, [])
+        XCTAssertEqual(sut.selectedList, .all)
+    }
 }
 
 private final class StubbedFeedLoader: FeedLoader {
