@@ -15,8 +15,9 @@ struct MainView: View {
         Group {
             switch viewModel.state {
             case .empty:
-                EmptyView()
-                
+                // Using an empty view here causes the onAppear to not be called on iOS
+                Rectangle()
+
             case .error(let error):
                 ErrorView(error: error)
 
