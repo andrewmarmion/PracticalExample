@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FeedItem: Identifiable {
+public struct FeedItem: Identifiable, Equatable {
     public let id: String
     public let name: String
     public let description: String
