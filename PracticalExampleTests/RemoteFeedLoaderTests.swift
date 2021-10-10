@@ -43,6 +43,24 @@ final class RemoteFeedLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs, [articleURL, videoURL, articleURL, videoURL])
     }
 
+    func test_load_deliversErrorOnClientError() {
+        let clientError = anyNSError()
+        let httpClient = HTTPClientStub(stubbedResponse: publishesError(error: clientError))
+        let (sut, _) = makeSUT(client: httpClient)
+        let exp = expectation(description: "Client Error")
+
+        sut
+            .load()
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    XCTAssertEqual(error as NSError, clientError)
+                    exp.fulfill()
+                }
+            } receiveValue: { _, _ in }
+            .store(in: &cancellables)
+
+        wait(for: [exp], timeout: 1.0)
+    }
     private func makeSUT(
         articleURL: URL = anyURL(),
         videoURL: URL = anyURL(),
