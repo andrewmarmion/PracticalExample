@@ -61,6 +61,26 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
         wait(for: [exp], timeout: 1.0)
     }
+
+    func test_load_deliversErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        let samples = [199, 201, 300, 400, 500]
+
+        samples.forEach { code in
+            expect(
+                sut,
+                toCompleteWith: failure(.invalidData)) {
+                    let clientData = anyData()
+                    let clientResponse = HTTPURLResponse(url: anyURL(), statusCode: code, httpVersion: nil, headerFields: nil)!
+                    client.stubbedResponse = publishesDataResponse(data: clientData, response: clientResponse)
+            }
+        }
+    }
+
+    // MARK: - Helpers
+
+    typealias ClientResult = Result<(articles: [FeedItem], videos: [FeedItem]), Error>
+
     private func makeSUT(
         articleURL: URL = anyURL(),
         videoURL: URL = anyURL(),
@@ -75,21 +95,85 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
         return (sut, client)
     }
+
+    func expect(
+        _ sut: RemoteFeedLoader,
+        toCompleteWith expectedResult: ClientResult,
+        when action: () -> Void,
+        file: StaticString = #filePath, line: UInt = #line
+    ) {
+        let exp = expectation(description: "wait for load completion")
+        var clientResult: ClientResult?
+        action()
+
+        sut.load()
+            .sink { completion in
+
+                if case let .failure(error) = completion {
+                    clientResult = .failure(error)
+                }
+
+                exp.fulfill()
+
+            } receiveValue: { articles, videos in
+                clientResult = .success((articles, videos))
+
+            }.store(in: &cancellables)
+
+
+
+        wait(for: [exp], timeout: 1.0)
+
+        guard let receivedResult = clientResult else {
+            XCTFail("Expected clientResult to not be nil")
+            return
+        }
+
+        switch (receivedResult, expectedResult) {
+        case let (.success(receivedItems), .success(expectedItems)):
+            XCTAssertEqual(receivedItems.articles, expectedItems.articles, file: file, line: line)
+            XCTAssertEqual(receivedItems.videos, expectedItems.videos, file: file, line: line)
+
+        case let(.failure(receivedError as RemoteFeedLoader.Error), .failure(expectedError as RemoteFeedLoader.Error)):
+            XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+
+        default:
+            XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+        }
+
+    }
+
+    private func failure(_ error: RemoteFeedLoader.Error) -> ClientResult {
+        .failure(error)
+    }
+
+    private func publishesError(error: Error) -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error> {
+        Just(())
+            .tryMap { throw error }
+            .eraseToAnyPublisher()
+    }
+
+    private func publishesDataResponse(data: Data, response: HTTPURLResponse) -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error>  {
+        Just((data, response)).mapError{ _ in anyNSError() }.eraseToAnyPublisher()
+    }
 }
 
 private class HTTPClientStub: HTTPClient {
 
     var requestedURLs: [URL] = []
 
-    let stubbedResponse: (() -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error>)?
+    var stubbedResponse: (AnyPublisher<(data: Data, response: HTTPURLResponse), Error>)?
 
-    init(stubbedResponse: (() -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error>)? = nil) {
+    init(stubbedResponse: (AnyPublisher<(data: Data, response: HTTPURLResponse), Error>)? = nil) {
         self.stubbedResponse = stubbedResponse
     }
 
     func get(from url: URL) -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error> {
         requestedURLs.append(url)
 
+        if let stubbedResponse = stubbedResponse {
+            return stubbedResponse
+        }
         return Just((anyData(), anyHTTPURLResponse())).mapError{ _ in anyNSError() }.eraseToAnyPublisher()
     }
 }
