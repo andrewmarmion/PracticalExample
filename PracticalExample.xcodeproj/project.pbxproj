@@ -269,10 +269,18 @@
 			children = (
 				2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */,
 				2DB00691271309DA00825BC7 /* RemoteFeedLoaderTests.swift */,
+				2DB006972713374F00825BC7 /* Helpers */,
+			);
+			path = PracticalExampleTests;
+			sourceTree = "<group>";
+		};
+		2DB006972713374F00825BC7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
 				2DB006952713370E00825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift */,
 				2DB0069327130BD800825BC7 /* Helpers.swift */,
 			);
-			path = PracticalExampleTests;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
