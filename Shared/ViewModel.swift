@@ -39,9 +39,26 @@ enum LoadingState: Equatable {
     }
 }
 
+class WrappedFeedLoader: FeedLoader {
+
+    private let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/articles.json")!
+
+    private let videosURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/videos.json")!
+
+    let remoteFeedLoader: RemoteFeedLoader
+
+    init(client: HTTPClient = URLSessionHTTPClient()) {
+        remoteFeedLoader = RemoteFeedLoader(articleURL: articlesURL, videoURL: videosURL, client: client)
+    }
+
+
+    func load() -> AnyPublisher<(articles: [FeedItem], videos: [FeedItem]), Error> {
+        remoteFeedLoader.load()
+    }
+}
+
 class ViewModel: ObservableObject {
 
-    @Published var state: LoadingState = .loading
     @Published var state: LoadingState = .empty
     @Published var selectedList: SelectedList = .all
     @Published var items: [FeedItem] = []
@@ -50,23 +67,18 @@ class ViewModel: ObservableObject {
     private var videos: [FeedItem] = []
     private var both: [FeedItem] = []
 
-    private let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/articles.json")!
-
-    private let videosURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/videos.json")!
-
     private var cancellables = Set<AnyCancellable>()
-    private var remoteFeedLoader: RemoteFeedLoader
+    private var feedLoader: FeedLoader
 
-    init(client: HTTPClient = URLSessionHTTPClient()) {
-        remoteFeedLoader = RemoteFeedLoader(articleURL: articlesURL, videoURL: videosURL, client: client)
-        load()
+    init(feedLoader: FeedLoader = WrappedFeedLoader()) {
+        self.feedLoader = feedLoader
     }
 
     func load() {
         self.state = .loading
 
-        remoteFeedLoader.load()
-            .receive(on: DispatchQueue.main)
+        feedLoader.load()
+            .receive(on: RunLoop.main)
             .sink { completion in
                 if case let .failure(error) = completion {
                     self.state = .error(error)

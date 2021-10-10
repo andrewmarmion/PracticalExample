@@ -35,5 +35,8 @@ struct MainView: View {
                 Image(systemName: "arrow.counterclockwise")
             }
         }
+        .onAppear {
+            viewModel.load()
+        }
     }
 }
