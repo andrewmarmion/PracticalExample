@@ -32,29 +32,28 @@ class ViewModel: ObservableObject {
 
     @Published var state: LoadingState = .loading
     @Published var selectedList: SelectedList = .all
-    @Published var items: [DisplayItem] = []
+    @Published var items: [FeedItem] = []
 
-    private var articles: [DisplayItem] = []
-    private var videos: [DisplayItem] = []
-    private var both: [DisplayItem] = []
+    private var articles: [FeedItem] = []
+    private var videos: [FeedItem] = []
+    private var both: [FeedItem] = []
+
+    private let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/articles.json")!
+
+    private let videosURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/videos.json")!
 
     private var cancellables = Set<AnyCancellable>()
+    private var remoteFeedLoader: RemoteFeedLoader
 
     init() {
+        remoteFeedLoader = RemoteFeedLoader(articleURL: articlesURL, videoURL: videosURL, client: URLSessionHTTPClient())
         load()
     }
 
     func load() {
         self.state = .loading
-        let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/articles.json")!
 
-        let videosURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/videos.json")!
-
-        let articlePublisher = publisher(for: articlesURL)
-        let videoPublisher = publisher(for: videosURL)
-
-        articlePublisher
-            .combineLatest(videoPublisher)
+        remoteFeedLoader.load()
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 if case let .failure(error) = completion {
@@ -81,15 +80,6 @@ class ViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    private func publisher(for url: URL) -> AnyPublisher<[DisplayItem], Error> {
-        // We should be injeting this so that we can use any type of dataTaskPublisher
-        URLSession.shared.dataTaskPublisher(for: url)
-            .tryMap { $0.data }
-            .decode(type: FeedItems.self, decoder: feedItemDecoder())
-            .map { $0.data.map(Self.mapToDisplayItem) }
-            .eraseToAnyPublisher()
-    }
-
     private func handle(selectedList: SelectedList) {
         switch selectedList {
         case .all: items = both
@@ -97,39 +87,9 @@ class ViewModel: ObservableObject {
         case .videos: items = videos
         }
     }
-
-    private func feedItemDecoder() -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(DateFormatter.customDate)
-        return decoder
-    }
-
-    private static func mapToDisplayItem(_ feedItem: FeedItem) -> DisplayItem {
-
-        func getImageName(for contentType: ContentType) -> String {
-            switch contentType {
-            case .article:
-                return "doc.text"
-            case .video:
-                return "film"
-            }
-        }
-
-        return DisplayItem(
-            id: feedItem.id,
-            name: feedItem.attributes.name,
-            description: feedItem.attributes.description,
-            imageURL: feedItem.attributes.cardArtworkURL,
-            releasedDateString: feedItem.attributes.releasedAt.display(),
-            releasedDate: feedItem.attributes.releasedAt,
-            itemTypeImage: getImageName(for: feedItem.attributes.contentType)
-        )
-    }
 }
 
-
-
-private extension Array where Element == DisplayItem {
+private extension Array where Element == FeedItem {
     func dateSorted() -> [Element] {
         self.sorted { first, second in
             first.releasedDate < second.releasedDate

@@ -21,14 +21,16 @@ class ImageLoader: ObservableObject {
     @Published var image: UIImage?
 
     private let url: URL?
-    private var cancellable: AnyCancellable?
+    private let client: HTTPClient
+    private(set) var cancellable: AnyCancellable?
 
     private(set) var isLoading: Bool = false
 
     private static let imageProcessingQueue = DispatchQueue(label: "Image-Processing")
 
-    public init(url: URL?) {
+    public init(url: URL?, client: HTTPClient = URLSessionHTTPClient()) {
         self.url = url
+        self.client = client
     }
 
     deinit {
@@ -40,7 +42,7 @@ class ImageLoader: ObservableObject {
         guard let url = url, !isLoading else { return }
 
         // Need to inject URLSession here
-        cancellable = URLSession.shared.dataTaskPublisher(for: url)
+        cancellable = client.get(from: url)
             .subscribe(on: Self.imageProcessingQueue)
             .map({ UIImage(data: $0.data) })
             .replaceError(with: nil)

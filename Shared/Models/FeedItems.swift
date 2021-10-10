@@ -7,11 +7,29 @@
 
 import Foundation
 
-struct FeedItems: Decodable {
-    let data: [FeedItem]
+enum FeedItemsMapper {
+    struct Root: Decodable {
+        let data: [RemoteFeedItem]
+    }
+
+    private static var OK_200: Int { 200 }
+
+    static func map(_ data: Data, from response: HTTPURLResponse) throws -> [RemoteFeedItem] {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.customDate)
+        guard response.statusCode == OK_200,
+              let root = try? decoder.decode(Root.self, from: data) else {
+                  throw RemoteFeedLoader.Error.invalidData
+              }
+        return root.data
+    }
 }
 
-struct FeedItem: Decodable, Identifiable {
+struct FeedItems: Decodable {
+    let data: [RemoteFeedItem]
+}
+
+struct RemoteFeedItem: Decodable, Identifiable {
     let id: String
     let type: String
     let attributes: ItemAttributes

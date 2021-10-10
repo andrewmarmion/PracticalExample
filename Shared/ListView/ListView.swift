@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListView: View {
-    let items: [DisplayItem]
+    let items: [FeedItem]
 
     var body: some View {
         List {
