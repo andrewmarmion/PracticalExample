@@ -41,7 +41,6 @@ class ImageLoader: ObservableObject {
         // TODO: We could add caching functionality so that we don't keep downloading the images
         guard let url = url, !isLoading else { return }
 
-        // Need to inject URLSession here
         cancellable = client.get(from: url)
             .subscribe(on: Self.imageProcessingQueue)
             .map({ UIImage(data: $0.data) })
