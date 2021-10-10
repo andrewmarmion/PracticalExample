@@ -5,8 +5,7 @@ import XCTest
 final class ViewModelTests: XCTestCase {
 
     func test_init_initialState() {
-        let feedLoader = StubbedFeedLoader(stubbedResponse: StubbedFeedLoader.publishesSuccessResponse())
-        let sut = ViewModel(feedLoader: feedLoader)
+        let sut = makeSUT()
 
         XCTAssertEqual(sut.state, .empty)
         XCTAssertEqual(sut.items, [])
@@ -14,8 +13,7 @@ final class ViewModelTests: XCTestCase {
     }
 
     func test_load_errorInFeedLoaderCreatesErrorState() {
-        let feedLoader = StubbedFeedLoader(stubbedResponse: StubbedFeedLoader.publishesErrorResponse())
-        let sut = ViewModel(feedLoader: feedLoader)
+        let sut = makeSUT(stubbedResponse: StubbedFeedLoader.publishesErrorResponse())
 
         sut.load()
 
@@ -25,8 +23,7 @@ final class ViewModelTests: XCTestCase {
     }
 
     func test_load_successInFeedLoaderWithEmptyListsCreatesLoadedState() {
-        let feedLoader = StubbedFeedLoader(stubbedResponse: StubbedFeedLoader.publishesSuccessResponse())
-        let sut = ViewModel(feedLoader: feedLoader)
+        let sut = makeSUT()
 
         sut.load()
 
@@ -34,6 +31,22 @@ final class ViewModelTests: XCTestCase {
         XCTAssertEqual(sut.items, [])
         XCTAssertEqual(sut.selectedList, .all)
     }
+    // MARK: - Helpers
+
+    private func makeSUT(
+        stubbedResponse: AnyPublisher<(articles: [FeedItem], videos: [FeedItem]), Error> = StubbedFeedLoader.publishesSuccessResponse(),
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) -> ViewModel {
+        let feedLoader = StubbedFeedLoader(stubbedResponse: stubbedResponse)
+        let sut = ViewModel(feedLoader: feedLoader)
+
+        trackForMemoryLeaks(feedLoader, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+
+        return sut
+    }
+
 }
 
 private final class StubbedFeedLoader: FeedLoader {
