@@ -92,6 +92,35 @@ final class RemoteFeedLoaderTests: XCTestCase {
         }
     }
 
+    func test_load_deliversItemsOn200HTTPResponseWithJSONItems() {
+        let (sut, client) = makeSUT()
+
+        let article = makeItem(
+            id: "article",
+            name: "article name",
+            description: "article description",
+            imageURL: URL(string: "https://article-url.com")!,
+            dateString: "2020-05-20T18:01:43.000Z",
+            itemTypeImage: .article
+        )
+
+        let video = makeItem(
+            id: "video",
+            name: "video name",
+            description: "video description",
+            imageURL: URL(string: "https://video-url.com")!,
+            dateString: "2021-02-21T15:06:25.000Z",
+            itemTypeImage: .video
+        )
+
+        let items = [article.model, video.model]
+
+        expect(sut, toCompleteWith: .success((items, items))) {
+            let json = makeItemsJSON([article.json, video.json])
+            client.stubbedResponse = publishesDataResponse(data: json, response: anyHTTPURLResponse())
+        }
+    }
+
     // MARK: - Helpers
 
     typealias ClientResult = Result<(articles: [FeedItem], videos: [FeedItem]), Error>
@@ -176,7 +205,59 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let json = ["data": items]
         return try! JSONSerialization.data(withJSONObject: json)
     }
+
+    private func makeItem(
+        id: String = UUID().uuidString,
+        name: String,
+        description: String,
+        imageURL: URL,
+        dateString: String,
+        itemTypeImage: ContentType
+    ) -> (model: FeedItem, json: [String: Any]) {
+
+        let (releasedDateString, releasedDate) = makeDate(from: dateString)
+
+        let item = FeedItem(
+            id: id,
+            name: name,
+            description: description,
+            imageURL: imageURL,
+            releasedDateString: releasedDateString,
+            releasedDate: releasedDate,
+            itemTypeImage: getImageName(for: itemTypeImage)
+        )
+
+        let json: [String: Any] = [
+            "id": item.id,
+            "attributes": [
+                "name": item.name,
+                "description": item.description,
+                "content_type": itemTypeImage.rawValue,
+                "card_artwork_url": item.imageURL.absoluteString,
+                "released_at": dateString
+                ]
+        ]
+
+        return (item, json)
+    }
+
+    private func makeDate(from dateString: String) -> (String, Date) {
+        let date = DateFormatter.customDate.date(from: dateString) ?? Date()
+        let displayDate = date.display()
+        return (displayDate, date)
+    }
+
+    private func getImageName(for contentType: ContentType) -> String {
+        switch contentType {
+        case .article:
+            return "doc.text"
+        case .video:
+            return "film"
+        }
+    }
 }
+
+
 
 private class HTTPClientStub: HTTPClient {
 
