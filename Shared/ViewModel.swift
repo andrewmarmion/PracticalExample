@@ -22,10 +22,19 @@ enum SelectedList: String, CaseIterable, Identifiable {
     }
 }
 
-enum LoadingState {
+enum LoadingState: Equatable {
     case loading
     case loaded
     case error(Error)
+
+    static func == (lhs: LoadingState, rhs: LoadingState) -> Bool {
+        switch (lhs, rhs) {
+        case (.loading, .loading): return true
+        case (.loaded, .loaded): return true
+        case (.error, .error): return true
+        default: return false
+        }
+    }
 }
 
 class ViewModel: ObservableObject {
