@@ -4,15 +4,30 @@ import XCTest
 
 final class RemoteFeedLoaderTests: XCTestCase {
 
-    func test_init_doesNotRequestDataFromURL() {
+    private var cancellables = Set<AnyCancellable>()
+
+    func test_init_doesNotRequestDataFromURLs() {
         let (_, client) = makeSUT()
 
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
 
+    func test_load_requestsDataFromURLs() {
+        let articleURL = URL(string: "https://article-url.com")!
+        let videoURL = URL(string: "https://video-url.com")!
+        let (sut, client) = makeSUT(articleURL: articleURL, videoURL: videoURL)
+
+        sut
+            .load()
+            .sink { _ in } receiveValue: { _, _ in }
+            .store(in: &cancellables)
+
+        XCTAssertEqual(client.requestedURLs, [articleURL, videoURL])
+    }
+
     private func makeSUT(
-        articleURL: URL = URL(string: "https://a-url.com")!,
-        videoURL: URL = URL(string: "https://a-url.com")!,
+        articleURL: URL = anyURL(),
+        videoURL: URL = anyURL(),
         client: HTTPClientStub = HTTPClientStub(),
         file: StaticString = #filePath,
         line: UInt = #line
