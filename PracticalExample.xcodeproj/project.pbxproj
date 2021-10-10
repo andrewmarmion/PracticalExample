@@ -45,7 +45,18 @@
 		2DB0067D2712E9F000825BC7 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0067B2712E9F000825BC7 /* FeedLoader.swift */; };
 		2DB006802712F51600825BC7 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0067F2712F51600825BC7 /* HTTPClient.swift */; };
 		2DB006812712F51600825BC7 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0067F2712F51600825BC7 /* HTTPClient.swift */; };
+		2DB006902712F92600825BC7 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2DB0068A2712F8FE00825BC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2DB006092711954300825BC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2DB0061A2711954600825BC7;
+			remoteInfo = "PracticalExample (macOS)";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2DB0060E2711954300825BC7 /* PracticalExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticalExampleApp.swift; sourceTree = "<group>"; };
@@ -73,6 +84,8 @@
 		2DB0066B2712E10C00825BC7 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		2DB0067B2712E9F000825BC7 /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 		2DB0067F2712F51600825BC7 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		2DB006862712F8FE00825BC7 /* PracticalExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PracticalExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +103,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2DB006832712F8FE00825BC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -98,6 +118,7 @@
 			children = (
 				2DB0060D2711954300825BC7 /* Shared */,
 				2DB0061C2711954600825BC7 /* macOS */,
+				2DB006872712F8FE00825BC7 /* PracticalExampleTests */,
 				2DB006162711954600825BC7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -128,6 +149,7 @@
 			children = (
 				2DB006152711954600825BC7 /* PracticalExample.app */,
 				2DB0061B2711954600825BC7 /* PracticalExample.app */,
+				2DB006862712F8FE00825BC7 /* PracticalExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,6 +258,14 @@
 			path = "Feed API";
 			sourceTree = "<group>";
 		};
+		2DB006872712F8FE00825BC7 /* PracticalExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */,
+			);
+			path = PracticalExampleTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -273,6 +303,24 @@
 			productReference = 2DB0061B2711954600825BC7 /* PracticalExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2DB006852712F8FE00825BC7 /* PracticalExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DB0068C2712F8FE00825BC7 /* Build configuration list for PBXNativeTarget "PracticalExampleTests" */;
+			buildPhases = (
+				2DB006822712F8FE00825BC7 /* Sources */,
+				2DB006832712F8FE00825BC7 /* Frameworks */,
+				2DB006842712F8FE00825BC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2DB0068B2712F8FE00825BC7 /* PBXTargetDependency */,
+			);
+			name = PracticalExampleTests;
+			productName = PracticalExampleTests;
+			productReference = 2DB006862712F8FE00825BC7 /* PracticalExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -288,6 +336,11 @@
 					};
 					2DB0061A2711954600825BC7 = {
 						CreatedOnToolsVersion = 13.0;
+					};
+					2DB006852712F8FE00825BC7 = {
+						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1300;
+						TestTargetID = 2DB0061A2711954600825BC7;
 					};
 				};
 			};
@@ -306,6 +359,7 @@
 			targets = (
 				2DB006142711954600825BC7 /* PracticalExample (iOS) */,
 				2DB0061A2711954600825BC7 /* PracticalExample (macOS) */,
+				2DB006852712F8FE00825BC7 /* PracticalExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -324,6 +378,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DB006232711954600825BC7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DB006842712F8FE00825BC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +441,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2DB006822712F8FE00825BC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DB006902712F92600825BC7 /* URLSessionHTTPClientTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2DB0068B2712F8FE00825BC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2DB0061A2711954600825BC7 /* PracticalExample (macOS) */;
+			targetProxy = 2DB0068A2712F8FE00825BC7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2DB006242711954600825BC7 /* Debug */ = {
@@ -611,6 +688,59 @@
 			};
 			name = Release;
 		};
+		2DB0068D2712F8FE00825BC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6748NP3BTA;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andrewmarmion.Test.PracticalExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PracticalExample.app/Contents/MacOS/PracticalExample";
+			};
+			name = Debug;
+		};
+		2DB0068E2712F8FE00825BC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6748NP3BTA;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.andrewmarmion.Test.PracticalExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PracticalExample.app/Contents/MacOS/PracticalExample";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -637,6 +767,15 @@
 			buildConfigurations = (
 				2DB0062A2711954600825BC7 /* Debug */,
 				2DB0062B2711954600825BC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2DB0068C2712F8FE00825BC7 /* Build configuration list for PBXNativeTarget "PracticalExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DB0068D2712F8FE00825BC7 /* Debug */,
+				2DB0068E2712F8FE00825BC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
