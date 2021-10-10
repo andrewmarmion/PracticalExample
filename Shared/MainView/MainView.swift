@@ -21,7 +21,7 @@ struct MainView: View {
                 LoadedView()
 
             case .loading:
-                LoadedView()
+                LoadingView()
             }
         }
         .navigationTitle("Courses")
