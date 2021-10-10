@@ -35,8 +35,8 @@
 		2DB0065D271208C200825BC7 /* ItemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0062C2711DD4400825BC7 /* ItemImageView.swift */; };
 		2DB0066227120C5B00825BC7 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066127120C5B00825BC7 /* ListItem.swift */; };
 		2DB0066327120C5B00825BC7 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066127120C5B00825BC7 /* ListItem.swift */; };
-		2DB0066627120CB400825BC7 /* FeedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066527120CB400825BC7 /* FeedItems.swift */; };
-		2DB0066727120CB400825BC7 /* FeedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066527120CB400825BC7 /* FeedItems.swift */; };
+		2DB0066627120CB400825BC7 /* RemoteFeedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066527120CB400825BC7 /* RemoteFeedItems.swift */; };
+		2DB0066727120CB400825BC7 /* RemoteFeedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066527120CB400825BC7 /* RemoteFeedItems.swift */; };
 		2DB0066927120CE600825BC7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066827120CE600825BC7 /* Helpers.swift */; };
 		2DB0066A27120CE600825BC7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066827120CE600825BC7 /* Helpers.swift */; };
 		2DB0066C2712E10C00825BC7 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0066B2712E10C00825BC7 /* FeedItem.swift */; };
@@ -52,6 +52,8 @@
 		2DB00699271337A200825BC7 /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB00698271337A200825BC7 /* ViewModelTests.swift */; };
 		2DB0069B2713381F00825BC7 /* HTTPClientStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0069A2713381F00825BC7 /* HTTPClientStub.swift */; };
 		2DB0069E27134C2400825BC7 /* StubbedFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0069D27134C2400825BC7 /* StubbedFeedLoader.swift */; };
+		2DB006A127134E0B00825BC7 /* FeedItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0069F27134D7100825BC7 /* FeedItemsMapper.swift */; };
+		2DB006A227134E0B00825BC7 /* FeedItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0069F27134D7100825BC7 /* FeedItemsMapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +87,7 @@
 		2DB006572712010A00825BC7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		2DB0065A271204BA00825BC7 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		2DB0066127120C5B00825BC7 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
-		2DB0066527120CB400825BC7 /* FeedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItems.swift; sourceTree = "<group>"; };
+		2DB0066527120CB400825BC7 /* RemoteFeedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedItems.swift; sourceTree = "<group>"; };
 		2DB0066827120CE600825BC7 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		2DB0066B2712E10C00825BC7 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		2DB0067B2712E9F000825BC7 /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		2DB00698271337A200825BC7 /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTests.swift; sourceTree = "<group>"; };
 		2DB0069A2713381F00825BC7 /* HTTPClientStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientStub.swift; sourceTree = "<group>"; };
 		2DB0069D27134C2400825BC7 /* StubbedFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbedFeedLoader.swift; sourceTree = "<group>"; };
+		2DB0069F27134D7100825BC7 /* FeedItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemsMapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,7 +257,8 @@
 		2DB0066427120CA700825BC7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2DB0066527120CB400825BC7 /* FeedItems.swift */,
+				2DB0066527120CB400825BC7 /* RemoteFeedItems.swift */,
+				2DB0069F27134D7100825BC7 /* FeedItemsMapper.swift */,
 				2DB0066B2712E10C00825BC7 /* FeedItem.swift */,
 			);
 			path = Models;
@@ -443,8 +447,9 @@
 				2DB006462711EF6400825BC7 /* LoadedView_iOS.swift in Sources */,
 				2DB0066227120C5B00825BC7 /* ListItem.swift in Sources */,
 				2DB006362711E19700825BC7 /* ListView.swift in Sources */,
+				2DB006A227134E0B00825BC7 /* FeedItemsMapper.swift in Sources */,
 				2DB006802712F51600825BC7 /* HTTPClient.swift in Sources */,
-				2DB0066627120CB400825BC7 /* FeedItems.swift in Sources */,
+				2DB0066627120CB400825BC7 /* RemoteFeedItems.swift in Sources */,
 				2DB0066927120CE600825BC7 /* Helpers.swift in Sources */,
 				2DB0061E2711954600825BC7 /* PracticalExampleApp.swift in Sources */,
 			);
@@ -468,8 +473,9 @@
 				2DB006372711E19700825BC7 /* ListView.swift in Sources */,
 				2DB0066327120C5B00825BC7 /* ListItem.swift in Sources */,
 				2DB0061F2711954600825BC7 /* PracticalExampleApp.swift in Sources */,
+				2DB006A127134E0B00825BC7 /* FeedItemsMapper.swift in Sources */,
 				2DB006812712F51600825BC7 /* HTTPClient.swift in Sources */,
-				2DB0066727120CB400825BC7 /* FeedItems.swift in Sources */,
+				2DB0066727120CB400825BC7 /* RemoteFeedItems.swift in Sources */,
 				2DB0066A27120CE600825BC7 /* Helpers.swift in Sources */,
 				2DB0064A2711EFCA00825BC7 /* LoadedView_macOS.swift in Sources */,
 			);
