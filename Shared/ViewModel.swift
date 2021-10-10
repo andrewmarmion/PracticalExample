@@ -39,7 +39,7 @@ enum LoadingState: Equatable {
     }
 }
 
-class WrappedFeedLoader: FeedLoader {
+class MainQueueFeedLoader: FeedLoader {
 
     private let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/articles.json")!
 
@@ -53,7 +53,11 @@ class WrappedFeedLoader: FeedLoader {
 
 
     func load() -> AnyPublisher<(articles: [FeedItem], videos: [FeedItem]), Error> {
-        remoteFeedLoader.load()
+        remoteFeedLoader
+            .load()
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+
     }
 }
 
@@ -70,7 +74,7 @@ class ViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var feedLoader: FeedLoader
 
-    init(feedLoader: FeedLoader = WrappedFeedLoader()) {
+    init(feedLoader: FeedLoader = MainQueueFeedLoader()) {
         self.feedLoader = feedLoader
     }
 
@@ -78,7 +82,6 @@ class ViewModel: ObservableObject {
         self.state = .loading
 
         feedLoader.load()
-            .receive(on: RunLoop.main)
             .sink { completion in
                 if case let .failure(error) = completion {
                     self.state = .error(error)
