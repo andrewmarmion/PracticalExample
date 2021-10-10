@@ -15,7 +15,7 @@ struct SideBarView: View {
         List {
             ForEach(SelectedList.allCases) { item in
                 HStack {
-                    Text(item.rawValue.capitalized)
+                    Text(item.title)
                         .foregroundColor(viewModel.selectedList == item ? .blue : nil)
                     Spacer()
                     // This makes the text tappable across the whole view

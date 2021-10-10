@@ -16,6 +16,10 @@ enum SelectedList: String, CaseIterable, Identifiable {
     var id: String {
         self.rawValue
     }
+
+    var title: String {
+        self.rawValue.capitalized
+    }
 }
 
 enum LoadingState {

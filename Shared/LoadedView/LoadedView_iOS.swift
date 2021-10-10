@@ -17,7 +17,7 @@ struct LoadedView: View {
             if horizontalSizeClass == .compact {
                 Picker("", selection: $viewModel.selectedList) {
                     ForEach(SelectedList.allCases) { item in
-                        Text(item.rawValue.capitalized).tag(item)
+                        Text(item.title).tag(item)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())

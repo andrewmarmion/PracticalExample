@@ -13,7 +13,7 @@ struct LoadedView: View {
 
     var body: some View {
         VStack {
-            Text(viewModel.selectedList.rawValue.capitalized)
+            Text(viewModel.selectedList.title)
                 .font(.title)
             ListView(items: viewModel.items)
         }
