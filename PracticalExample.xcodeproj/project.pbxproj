@@ -48,6 +48,7 @@
 		2DB006902712F92600825BC7 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */; };
 		2DB00692271309DA00825BC7 /* RemoteFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB00691271309DA00825BC7 /* RemoteFeedLoaderTests.swift */; };
 		2DB0069427130BD800825BC7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0069327130BD800825BC7 /* Helpers.swift */; };
+		2DB006962713370E00825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006952713370E00825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		2DB00691271309DA00825BC7 /* RemoteFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoaderTests.swift; sourceTree = "<group>"; };
 		2DB0069327130BD800825BC7 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		2DB006952713370E00825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestCaseMemoryLeakTrackingHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +269,7 @@
 			children = (
 				2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */,
 				2DB00691271309DA00825BC7 /* RemoteFeedLoaderTests.swift */,
+				2DB006952713370E00825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift */,
 				2DB0069327130BD800825BC7 /* Helpers.swift */,
 			);
 			path = PracticalExampleTests;
@@ -454,6 +457,7 @@
 				2DB00692271309DA00825BC7 /* RemoteFeedLoaderTests.swift in Sources */,
 				2DB0069427130BD800825BC7 /* Helpers.swift in Sources */,
 				2DB006902712F92600825BC7 /* URLSessionHTTPClientTests.swift in Sources */,
+				2DB006962713370E00825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
