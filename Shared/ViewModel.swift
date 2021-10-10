@@ -23,6 +23,7 @@ enum SelectedList: String, CaseIterable, Identifiable {
 }
 
 enum LoadingState: Equatable {
+    case empty
     case loading
     case loaded
     case error(Error)
@@ -32,6 +33,7 @@ enum LoadingState: Equatable {
         case (.loading, .loading): return true
         case (.loaded, .loaded): return true
         case (.error, .error): return true
+        case(.empty, .empty): return true
         default: return false
         }
     }
@@ -40,6 +42,7 @@ enum LoadingState: Equatable {
 class ViewModel: ObservableObject {
 
     @Published var state: LoadingState = .loading
+    @Published var state: LoadingState = .empty
     @Published var selectedList: SelectedList = .all
     @Published var items: [FeedItem] = []
 

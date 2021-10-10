@@ -14,6 +14,9 @@ struct MainView: View {
     var body: some View {
         Group {
             switch viewModel.state {
+            case .empty:
+                EmptyView()
+                
             case .error(let error):
                 ErrorView(error: error)
 
