@@ -8,6 +8,16 @@
 import Combine
 import SwiftUI
 
+struct DisplayItem: Identifiable {
+    let id: String
+    let name: String
+    let description: String
+    let imageURL: URL
+    let releasedDateString: String
+    let releasedDate: Date
+    let itemTypeImage: String
+}
+
 enum SelectedList: String, CaseIterable, Identifiable {
     case all
     case articles
@@ -28,11 +38,11 @@ class ViewModel: ObservableObject {
 
     @Published var state: LoadingState = .loading
     @Published var selectedList: SelectedList = .all
-    @Published var items: [FeedItem] = []
+    @Published var items: [DisplayItem] = []
 
-    private var articles: [FeedItem] = []
-    private var videos: [FeedItem] = []
-    private var both: [FeedItem] = []
+    private var articles: [DisplayItem] = []
+    private var videos: [DisplayItem] = []
+    private var both: [DisplayItem] = []
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -77,12 +87,12 @@ class ViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    private func publisher(for url: URL) -> AnyPublisher<[FeedItem], Error> {
+    private func publisher(for url: URL) -> AnyPublisher<[DisplayItem], Error> {
         // We should be injeting this so that we can use any type of dataTaskPublisher
         URLSession.shared.dataTaskPublisher(for: url)
             .tryMap { $0.data }
             .decode(type: FeedItems.self, decoder: feedItemDecoder())
-            .map { $0.data }
+            .map { $0.data.map(Self.mapToDisplayItem) }
             .eraseToAnyPublisher()
     }
 
@@ -99,14 +109,36 @@ class ViewModel: ObservableObject {
         decoder.dateDecodingStrategy = .formatted(DateFormatter.customDate)
         return decoder
     }
+
+    private static func mapToDisplayItem(_ feedItem: FeedItem) -> DisplayItem {
+
+        func getImageName(for contentType: ContentType) -> String {
+            switch contentType {
+            case .article:
+                return "doc.text"
+            case .video:
+                return "film"
+            }
+        }
+
+        return DisplayItem(
+            id: feedItem.id,
+            name: feedItem.attributes.name,
+            description: feedItem.attributes.description,
+            imageURL: feedItem.attributes.card_artwork_url,
+            releasedDateString: feedItem.attributes.released_at.display(),
+            releasedDate: feedItem.attributes.released_at,
+            itemTypeImage: getImageName(for: feedItem.attributes.content_type)
+        )
+    }
 }
 
 
 
-private extension Array where Element == FeedItem {
+private extension Array where Element == DisplayItem {
     func dateSorted() -> [Element] {
         self.sorted { first, second in
-            first.attributes.released_at < second.attributes.released_at
+            first.releasedDate < second.releasedDate
         }
     }
 }
