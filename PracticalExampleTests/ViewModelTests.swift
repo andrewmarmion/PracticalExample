@@ -13,6 +13,17 @@ final class ViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedList, .all)
     }
 
+    func test_load_errorInFeedLoaderDisplaysError() {
+        let feedLoader = StubbedFeedLoader(stubbedResponse: StubbedFeedLoader.publlishesErrorResponse())
+        let sut = ViewModel(feedLoader: feedLoader)
+
+        sut.load()
+
+        XCTAssertEqual(sut.state, .error(anyNSError()))
+        XCTAssertEqual(sut.items, [])
+        XCTAssertEqual(sut.selectedList, .all)
+    }
+
 }
 
 private final class StubbedFeedLoader: FeedLoader {
@@ -29,5 +40,11 @@ private final class StubbedFeedLoader: FeedLoader {
 
     static func publishesEmptyResponse() -> AnyPublisher<(articles: [FeedItem], videos: [FeedItem]), Error> {
         Just(([], [])).mapError{ _ in anyNSError() }.eraseToAnyPublisher()
+    }
+
+    static func publlishesErrorResponse() -> AnyPublisher<(articles: [FeedItem], videos: [FeedItem]), Error> {
+        Just(())
+            .tryMap { throw anyNSError() }
+            .eraseToAnyPublisher()
     }
 }
