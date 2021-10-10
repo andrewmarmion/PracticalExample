@@ -54,8 +54,8 @@ class ViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var remoteFeedLoader: RemoteFeedLoader
 
-    init() {
-        remoteFeedLoader = RemoteFeedLoader(articleURL: articlesURL, videoURL: videosURL, client: URLSessionHTTPClient())
+    init(client: HTTPClient = URLSessionHTTPClient()) {
+        remoteFeedLoader = RemoteFeedLoader(articleURL: articlesURL, videoURL: videosURL, client: client)
         load()
     }
 
