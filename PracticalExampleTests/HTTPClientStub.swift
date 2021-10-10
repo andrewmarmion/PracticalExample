@@ -27,4 +27,14 @@ final class HTTPClientStub: HTTPClient {
         }
         return Just((anyData(), anyHTTPURLResponse())).mapError{ _ in anyNSError() }.eraseToAnyPublisher()
     }
+
+    static func publishesError(error: Error) -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error> {
+        Just(())
+            .tryMap { throw error }
+            .eraseToAnyPublisher()
+    }
+
+    static func publishesDataResponse(data: Data, response: HTTPURLResponse) -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error>  {
+        Just((data, response)).mapError{ _ in anyNSError() }.eraseToAnyPublisher()
+    }
 }

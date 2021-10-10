@@ -45,7 +45,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
     func test_load_deliversErrorOnClientError() {
         let clientError = anyNSError()
-        let httpClient = HTTPClientStub(stubbedResponse: publishesError(error: clientError))
+        let httpClient = HTTPClientStub(stubbedResponse: HTTPClientStub.publishesError(error: clientError))
         let (sut, _) = makeSUT(client: httpClient)
         let exp = expectation(description: "Client Error")
 
@@ -69,7 +69,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         samples.forEach { code in
             expect(sut, toCompleteWith: failure(.invalidData)) {
                     let clientResponse = HTTPURLResponse(url: anyURL(), statusCode: code, httpVersion: nil, headerFields: nil)!
-                    client.stubbedResponse = publishesDataResponse(data: anyData(), response: clientResponse)
+                client.stubbedResponse = HTTPClientStub.publishesDataResponse(data: anyData(), response: clientResponse)
             }
         }
     }
@@ -79,7 +79,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
         expect(sut, toCompleteWith: failure(.invalidData)) {
             let invalidJSON = Data("invalid json".utf8)
-            client.stubbedResponse = publishesDataResponse(data: invalidJSON, response: anyHTTPURLResponse())
+            client.stubbedResponse = HTTPClientStub.publishesDataResponse(data: invalidJSON, response: anyHTTPURLResponse())
         }
     }
 
@@ -88,7 +88,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
         expect(sut, toCompleteWith: .success(([], []))) {
             let emptyListJSON = makeItemsJSON([])
-            client.stubbedResponse = publishesDataResponse(data: emptyListJSON, response: anyHTTPURLResponse())
+            client.stubbedResponse = HTTPClientStub.publishesDataResponse(data: emptyListJSON, response: anyHTTPURLResponse())
         }
     }
 
@@ -117,7 +117,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
         expect(sut, toCompleteWith: .success((items, items))) {
             let json = makeItemsJSON([article.json, video.json])
-            client.stubbedResponse = publishesDataResponse(data: json, response: anyHTTPURLResponse())
+            client.stubbedResponse = HTTPClientStub.publishesDataResponse(data: json, response: anyHTTPURLResponse())
         }
     }
 
@@ -189,16 +189,6 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
     private func failure(_ error: RemoteFeedLoader.Error) -> ClientResult {
         .failure(error)
-    }
-
-    private func publishesError(error: Error) -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error> {
-        Just(())
-            .tryMap { throw error }
-            .eraseToAnyPublisher()
-    }
-
-    private func publishesDataResponse(data: Data, response: HTTPURLResponse) -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error>  {
-        Just((data, response)).mapError{ _ in anyNSError() }.eraseToAnyPublisher()
     }
 
     private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
