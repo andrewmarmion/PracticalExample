@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol FeedLoader {
+public protocol FeedLoader {
     func load() -> AnyPublisher<(articles: [FeedItem], videos: [FeedItem]), Error>
 }
 
