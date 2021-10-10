@@ -8,7 +8,7 @@
 import Foundation
 
 extension Date {
-    func display() -> String {
+    public func display() -> String {
         self.formatted(
             .dateTime
             .month(.wide)

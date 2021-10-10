@@ -31,7 +31,6 @@ struct FeedItems: Decodable {
 
 struct RemoteFeedItem: Decodable, Identifiable {
     let id: String
-    let type: String
     let attributes: ItemAttributes
 }
 
@@ -51,7 +50,7 @@ struct ItemAttributes: Decodable {
     }
 }
 
-enum ContentType: String, Decodable {
+public enum ContentType: String, Decodable {
     case article
     case video = "collection"
 }

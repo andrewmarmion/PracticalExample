@@ -16,7 +16,7 @@ extension Date {
         return dateFormatter
     }()
 
-    func display() -> String {
+    public func display() -> String {
         Self.dateFormatter.string(from: self)
     }
 }
