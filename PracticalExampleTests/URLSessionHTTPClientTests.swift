@@ -4,14 +4,18 @@ import XCTest
 
 final class URLSessionHTTPClientTests: XCTestCase {
 
+    private var cancellables = Set<AnyCancellable>()
+
     override func setUp() {
         super.setUp()
         URLProtocolStub.startInterceptingRequests()
+        cancellables.removeAll()
     }
 
     override func tearDown() {
         super.tearDown()
         URLProtocolStub.stopInterceptingRequests()
+        cancellables.removeAll()
     }
 
     func test_getFromURL_performsGETRequestWithURL() {
@@ -24,7 +28,9 @@ final class URLSessionHTTPClientTests: XCTestCase {
             exp.fulfill()
         }
 
-        _ = makeSUT().get(from: url).sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+        makeSUT().get(from: url)
+            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+            .store(in: &cancellables)
 
         wait(for: [exp], timeout: 1.0)
     }
