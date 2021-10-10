@@ -83,6 +83,15 @@ final class RemoteFeedLoaderTests: XCTestCase {
         }
     }
 
+    func test_load_deliversNoItemsOn200HTTPResponseWithEmptyJSONList() {
+        let (sut, client) = makeSUT()
+
+        expect(sut, toCompleteWith: .success(([], []))) {
+            let emptyListJSON = makeItemsJSON([])
+            client.stubbedResponse = publishesDataResponse(data: emptyListJSON, response: anyHTTPURLResponse())
+        }
+    }
+
     // MARK: - Helpers
 
     typealias ClientResult = Result<(articles: [FeedItem], videos: [FeedItem]), Error>
@@ -161,6 +170,11 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
     private func publishesDataResponse(data: Data, response: HTTPURLResponse) -> AnyPublisher<(data: Data, response: HTTPURLResponse), Error>  {
         Just((data, response)).mapError{ _ in anyNSError() }.eraseToAnyPublisher()
+    }
+
+    private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
+        let json = ["data": items]
+        return try! JSONSerialization.data(withJSONObject: json)
     }
 }
 
