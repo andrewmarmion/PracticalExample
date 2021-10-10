@@ -15,4 +15,22 @@ public struct FeedItem: Identifiable, Equatable {
     public let releasedDateString: String
     public let releasedDate: Date
     public let itemTypeImage: String
+
+    public init(
+        id: String,
+        name: String,
+        description: String, 
+        imageURL: URL,
+        releasedDateString: String,
+        releasedDate: Date,
+        itemTypeImage: String
+    ) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.imageURL = imageURL
+        self.releasedDateString = releasedDateString
+        self.releasedDate = releasedDate
+        self.itemTypeImage = itemTypeImage
+    }
 }
