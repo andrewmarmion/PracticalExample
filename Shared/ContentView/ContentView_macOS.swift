@@ -27,6 +27,7 @@ struct ContentView: View {
     }
 
     private func toggleSidebar() {
+        // This is liable to break, we should be careful about using this.
         NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
     }
 }
