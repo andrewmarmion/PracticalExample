@@ -13,8 +13,6 @@ struct SideBarView: View {
 
     var body: some View {
         List {
-            Text("Options")
-                .font(.title2)
             ForEach(SelectedList.allCases) { item in
                 HStack {
                     Text(item.rawValue.capitalized)
@@ -28,5 +26,6 @@ struct SideBarView: View {
                 }
             }
         }
+        .navigationTitle("Options")
     }
 }
