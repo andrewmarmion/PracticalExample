@@ -11,7 +11,7 @@ import Foundation
 
 final class HTTPClientStub: HTTPClient {
 
-    var requestedURLs: [URL] = []
+    private(set) var requestedURLs: [URL] = []
 
     var stubbedResponse: (AnyPublisher<(data: Data, response: HTTPURLResponse), Error>)?
 
