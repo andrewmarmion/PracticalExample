@@ -79,6 +79,8 @@
 		2DB006F62714305B00825BC7 /* NSImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006F52714305B00825BC7 /* NSImage+TestHelpers.swift */; };
 		2DB006F827143A1400825BC7 /* ImageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006F727143A1400825BC7 /* ImageViewModelTests.swift */; };
 		2DB006F927143A1800825BC7 /* ImageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006F727143A1400825BC7 /* ImageViewModelTests.swift */; };
+		2DB006FB2714400900825BC7 /* StubbedImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006FA2714400900825BC7 /* StubbedImageLoader.swift */; };
+		2DB006FC2714403500825BC7 /* StubbedImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006FA2714400900825BC7 /* StubbedImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +148,7 @@
 		2DB006F227142FBC00825BC7 /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
 		2DB006F52714305B00825BC7 /* NSImage+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+TestHelpers.swift"; sourceTree = "<group>"; };
 		2DB006F727143A1400825BC7 /* ImageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModelTests.swift; sourceTree = "<group>"; };
+		2DB006FA2714400900825BC7 /* StubbedImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbedImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,13 +338,13 @@
 		2DB006872712F8FE00825BC7 /* PracticalExampleTests_macOS */ = {
 			isa = PBXGroup;
 			children = (
-				2DB0069C27134C1300825BC7 /* Stubs */,
 				2DB006972713374F00825BC7 /* Helpers */,
-				2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */,
-				2DB00691271309DA00825BC7 /* RemoteFeedLoaderTests.swift */,
-				2DB00698271337A200825BC7 /* ViewModelTests.swift */,
-				2DB006EE2714295A00825BC7 /* RemoteImageLoaderTests.swift */,
+				2DB0069C27134C1300825BC7 /* Stubs */,
 				2DB006F727143A1400825BC7 /* ImageViewModelTests.swift */,
+				2DB00691271309DA00825BC7 /* RemoteFeedLoaderTests.swift */,
+				2DB006EE2714295A00825BC7 /* RemoteImageLoaderTests.swift */,
+				2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */,
+				2DB00698271337A200825BC7 /* ViewModelTests.swift */,
 			);
 			path = PracticalExampleTests_macOS;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 			children = (
 				2DB0069A2713381F00825BC7 /* HTTPClientStub.swift */,
 				2DB0069D27134C2400825BC7 /* StubbedFeedLoader.swift */,
+				2DB006FA2714400900825BC7 /* StubbedImageLoader.swift */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -617,6 +621,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DB006EF2714295A00825BC7 /* RemoteImageLoaderTests.swift in Sources */,
+				2DB006FB2714400900825BC7 /* StubbedImageLoader.swift in Sources */,
 				2DB0069B2713381F00825BC7 /* HTTPClientStub.swift in Sources */,
 				2DB00692271309DA00825BC7 /* RemoteFeedLoaderTests.swift in Sources */,
 				2DB0069427130BD800825BC7 /* Helpers.swift in Sources */,
@@ -634,6 +639,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DB006F02714295D00825BC7 /* RemoteImageLoaderTests.swift in Sources */,
+				2DB006FC2714403500825BC7 /* StubbedImageLoader.swift in Sources */,
 				2DB006D32713508300825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift in Sources */,
 				2DB006F427142FBC00825BC7 /* UIImage+TestHelpers.swift in Sources */,
 				2DB006D22713507F00825BC7 /* StubbedFeedLoader.swift in Sources */,
