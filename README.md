@@ -44,7 +44,9 @@ Clone the repo from `https://github.com/andrewmarmion/PracticalExample.git`
 
 Built using Xcode 13 on a Mac with macOS 11.6.
 
-The application uses no external dependencies. 
+**You will need to set your own signing team.**
+
+The application uses no external dependencies.
 
 ## Application
 
@@ -59,7 +61,6 @@ This is a multi-platform project containing distinct layouts for iOS, iPadOS, an
 Rather than litter the code with OS availability checks, for some files, I chose to have iOS and macOS versions. This means that although there are duplicate files they are consigned to specific targets. It makes the code, in my opinion, easier to read. 
 
 Where possible I have tried to reuse views across platforms, this is to limit duplication. 
-
 The majority of the logic for the application is contained within the `ViewModel`, and this is passed through the view hierarchy by using `environmentObject`.
 
 ## Tests
