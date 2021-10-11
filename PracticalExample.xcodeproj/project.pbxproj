@@ -75,6 +75,8 @@
 		2DB006ED2714281400825BC7 /* MainQueueRemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006EB2714281400825BC7 /* MainQueueRemoteFeedLoader.swift */; };
 		2DB006EF2714295A00825BC7 /* RemoteImageLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006EE2714295A00825BC7 /* RemoteImageLoaderTests.swift */; };
 		2DB006F02714295D00825BC7 /* RemoteImageLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006EE2714295A00825BC7 /* RemoteImageLoaderTests.swift */; };
+		2DB006F427142FBC00825BC7 /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006F227142FBC00825BC7 /* UIImage+TestHelpers.swift */; };
+		2DB006F62714305B00825BC7 /* NSImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB006F52714305B00825BC7 /* NSImage+TestHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +141,8 @@
 		2DB006E82714271000825BC7 /* MainQueueRemoteImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueRemoteImageLoader.swift; sourceTree = "<group>"; };
 		2DB006EB2714281400825BC7 /* MainQueueRemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueRemoteFeedLoader.swift; sourceTree = "<group>"; };
 		2DB006EE2714295A00825BC7 /* RemoteImageLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageLoaderTests.swift; sourceTree = "<group>"; };
+		2DB006F227142FBC00825BC7 /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
+		2DB006F52714305B00825BC7 /* NSImage+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+TestHelpers.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +345,8 @@
 		2DB006972713374F00825BC7 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2DB006F227142FBC00825BC7 /* UIImage+TestHelpers.swift */,
+				2DB006F52714305B00825BC7 /* NSImage+TestHelpers.swift */,
 				2DB006952713370E00825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift */,
 				2DB0069327130BD800825BC7 /* Helpers.swift */,
 			);
@@ -610,6 +616,7 @@
 				2DB0069B2713381F00825BC7 /* HTTPClientStub.swift in Sources */,
 				2DB00692271309DA00825BC7 /* RemoteFeedLoaderTests.swift in Sources */,
 				2DB0069427130BD800825BC7 /* Helpers.swift in Sources */,
+				2DB006F62714305B00825BC7 /* NSImage+TestHelpers.swift in Sources */,
 				2DB0069E27134C2400825BC7 /* StubbedFeedLoader.swift in Sources */,
 				2DB00699271337A200825BC7 /* ViewModelTests.swift in Sources */,
 				2DB006902712F92600825BC7 /* URLSessionHTTPClientTests.swift in Sources */,
@@ -623,6 +630,7 @@
 			files = (
 				2DB006F02714295D00825BC7 /* RemoteImageLoaderTests.swift in Sources */,
 				2DB006D32713508300825BC7 /* XCTestCaseMemoryLeakTrackingHelper.swift in Sources */,
+				2DB006F427142FBC00825BC7 /* UIImage+TestHelpers.swift in Sources */,
 				2DB006D22713507F00825BC7 /* StubbedFeedLoader.swift in Sources */,
 				2DB006D62713508B00825BC7 /* RemoteFeedLoaderTests.swift in Sources */,
 				2DB006D52713508800825BC7 /* URLSessionHTTPClientTests.swift in Sources */,

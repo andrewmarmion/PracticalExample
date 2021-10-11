@@ -83,6 +83,18 @@ final class RemoteImageLoaderTests: XCTestCase {
         }
     }
 
+    func test_load_deliversImageOn200HTTPResponseWithValidData() throws {
+        let (sut, client) = makeSUT()
+
+        let (image, data) = createImage()
+
+        let imageData = try XCTUnwrap(data)
+
+        expect(sut, toCompleteWith: image) {
+            client.stubbedResponse = HTTPClientStub.publishesDataResponse(data: imageData, response: anyHTTPURLResponse())
+        }
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
@@ -96,5 +108,48 @@ final class RemoteImageLoaderTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
 
         return (sut, client)
+    }
+
+    private func expect(
+        _ sut: RemoteImageLoader,
+        imageURL: URL = anyURL(),
+        toCompleteWith expectedResult: PEImage?,
+        when action: () -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let exp = expectation(description: "wait for load completion")
+        var receivedResult: PEImage?
+        action()
+
+        sut
+            .load(url: imageURL)
+            .sink { image in
+                receivedResult = image
+                exp.fulfill()
+            }
+            .store(in: &cancellables)
+
+        wait(for: [exp], timeout: 1.0)
+
+        if let receivedResult = receivedResult, let expectedResult = expectedResult {
+            XCTAssertEqual(getData(from: receivedResult), getData(from: expectedResult))
+        } else {
+            XCTAssertEqual(receivedResult, expectedResult, file: file, line: line)
+        }
+    }
+
+    private func createImage() -> (PEImage?, Data?) {
+        let image = PEImage.makeTestImage()
+        let data = getData(from: image)
+        return (image, data)
+    }
+
+    private func getData(from image: PEImage?) -> Data? {
+        #if os(iOS)
+        return image?.pngData()
+        #else
+        return image?.tiffRepresentation
+        #endif
     }
 }
