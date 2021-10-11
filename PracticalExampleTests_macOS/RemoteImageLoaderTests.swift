@@ -74,6 +74,15 @@ final class RemoteImageLoaderTests: XCTestCase {
         }
     }
 
+    func test_load_deliversNilOn200HTTPResponseWithInvalidData() {
+        let (sut, client) = makeSUT()
+
+        expect(sut, toCompleteWith: nil) {
+            let invalidJSON = Data("invalid image data".utf8)
+            client.stubbedResponse = HTTPClientStub.publishesDataResponse(data: invalidJSON, response: anyHTTPURLResponse())
+        }
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(
