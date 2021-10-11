@@ -136,7 +136,7 @@
 		2DB0069D27134C2400825BC7 /* StubbedFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbedFeedLoader.swift; sourceTree = "<group>"; };
 		2DB0069F27134D7100825BC7 /* FeedItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemsMapper.swift; sourceTree = "<group>"; };
 		2DB006C82713507200825BC7 /* PracticalExampleTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PracticalExampleTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2DB006D82713516D00825BC7 /* Placeholder.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Placeholder.md; sourceTree = "<group>"; };
+		2DB006D82713516D00825BC7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2DB006D9271373F500825BC7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2DB006DA2714212C00825BC7 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		2DB006DD2714262600825BC7 /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
@@ -319,7 +319,7 @@
 		2DB006C92713507200825BC7 /* PracticalExampleTests_iOS */ = {
 			isa = PBXGroup;
 			children = (
-				2DB006D82713516D00825BC7 /* Placeholder.md */,
+				2DB006D82713516D00825BC7 /* README.md */,
 			);
 			path = PracticalExampleTests_iOS;
 			sourceTree = "<group>";
