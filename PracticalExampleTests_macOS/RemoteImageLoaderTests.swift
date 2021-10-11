@@ -31,17 +31,37 @@ final class RemoteImageLoaderTests: XCTestCase {
 
         sut
             .load(url: imageURL1)
-            .sink { _ in } receiveValue: { _ in }
+            .sink { _ in }
             .store(in: &cancellables)
 
         sut
             .load(url: imageURL2)
-            .sink { _ in } receiveValue: { _ in }
+            .sink { _ in }
             .store(in: &cancellables)
 
         XCTAssertEqual(client.requestedURLs, [imageURL1, imageURL2])
-
     }
+
+    func test_load_deliversNilOnClientError() {
+        let clientError = anyNSError()
+        let httpClient = HTTPClientStub(stubbedResponse: HTTPClientStub.publishesError(error: clientError))
+        let (sut, _) = makeSUT(client: httpClient)
+        let exp = expectation(description: "delivers nil on error")
+        let imageURL = anyURL()
+
+        sut
+            .load(url: imageURL)
+            .sink { image in
+                XCTAssertNil(image)
+                exp.fulfill()
+            }
+            .store(in: &cancellables)
+
+        wait(for: [exp], timeout: 1.0)
+    }
+
+
+    
 
     // MARK: - Helpers
 
