@@ -17,6 +17,7 @@ struct MainView: View {
             case .empty:
                 // Using an empty view here causes the onAppear to not be called on iOS
                 Rectangle()
+                    .opacity(0.1)
 
             case .error(let error):
                 ErrorView(error: error)

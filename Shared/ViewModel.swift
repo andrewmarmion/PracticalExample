@@ -39,29 +39,7 @@ enum LoadingState: Equatable {
     }
 }
 
-class MainQueueFeedLoader: FeedLoader {
-
-    private let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/articles.json")!
-
-    private let videosURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/videos.json")!
-
-    let remoteFeedLoader: RemoteFeedLoader
-
-    init(client: HTTPClient = URLSessionHTTPClient()) {
-        remoteFeedLoader = RemoteFeedLoader(articleURL: articlesURL, videoURL: videosURL, client: client)
-    }
-
-
-    func load() -> AnyPublisher<(articles: [FeedItem], videos: [FeedItem]), Error> {
-        remoteFeedLoader
-            .load()
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-
-    }
-}
-
-class ViewModel: ObservableObject {
+final class ViewModel: ObservableObject {
 
     @Published var state: LoadingState = .empty
     @Published var selectedList: SelectedList = .all
@@ -74,7 +52,7 @@ class ViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var feedLoader: FeedLoader
 
-    init(feedLoader: FeedLoader = MainQueueFeedLoader()) {
+    init(feedLoader: FeedLoader = MainQueueRemoteFeedLoader()) {
         self.feedLoader = feedLoader
     }
 

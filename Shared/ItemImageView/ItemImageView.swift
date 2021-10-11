@@ -10,12 +10,12 @@ import SwiftUI
 
 struct ItemImageView: View {
 
-    @StateObject private var loader: ImageLoader
+    @StateObject private var loader: ImageViewModel
 
     public init(
         url: URL?
     ) {
-        self._loader = StateObject(wrappedValue: ImageLoader(url: url))
+        self._loader = StateObject(wrappedValue: ImageViewModel(url: url))
     }
 
     public var body: some View {
