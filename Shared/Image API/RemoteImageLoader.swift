@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-public class RemoteImageLoader: ImageLoader {
+public final class RemoteImageLoader: ImageLoader {
 
     private let client: HTTPClient
     private(set) var isLoading: Bool = false

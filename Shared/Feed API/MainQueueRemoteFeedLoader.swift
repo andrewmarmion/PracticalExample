@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-class MainQueueRemoteFeedLoader: FeedLoader {
+final class MainQueueRemoteFeedLoader: FeedLoader {
 
     // We could technically pass in these URLs but for ease we'll just hard code them here
     private let articlesURL = URL(string: "https://raw.githubusercontent.com/raywenderlich/ios-interview/master/Practical%20Example/articles.json")!
