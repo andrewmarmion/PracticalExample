@@ -12,6 +12,15 @@ final class ImageViewModelTests: XCTestCase {
         XCTAssertNil(sut.cancellable)
     }
 
+    func test_load_imageLoaderPerformLoadForURL() {
+        let imageURL = anyURL()
+        let (sut, imageLoader) = makeSUT(imageURL: imageURL)
+
+        sut.load()
+
+        XCTAssertEqual(imageLoader.requestedURLs, [imageURL])
+    }
+
     func test_load_imageLoaderDeliversImageToViewModel() {
         let image = PEImage.makeTestImage()
         let (sut, _) = makeSUT(stubbedResponse: StubbedImageLoader.publishesImage(image: image))
@@ -51,7 +60,7 @@ final class ImageViewModelTests: XCTestCase {
 
 final class StubbedImageLoader: ImageLoader {
 
-    private(set) var requestedURLs: [URL] = []
+    private(set) var requestedURLs: [URL?] = []
 
     let stubbedResponse: AnyPublisher<Optional<PEImage>, Never>
 
@@ -60,8 +69,8 @@ final class StubbedImageLoader: ImageLoader {
     }
 
     func load(url: URL?) -> AnyPublisher<Optional<PEImage>, Never> {
-
-        stubbedResponse
+        requestedURLs.append(url)
+        return stubbedResponse
     }
 
     static func publishesImage(image: PEImage?) -> AnyPublisher<Optional<PEImage>, Never> {
