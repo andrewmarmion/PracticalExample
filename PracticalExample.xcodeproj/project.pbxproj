@@ -199,21 +199,10 @@
 			isa = PBXGroup;
 			children = (
 				2DB0060E2711954300825BC7 /* PracticalExampleApp.swift */,
-				2DB0065E27120C1300825BC7 /* SideBarView */,
-				2DB0064B2711F7B400825BC7 /* ContentView */,
-				2DB006502711F80A00825BC7 /* MainView */,
-				2DB0065F27120C1D00825BC7 /* ErrorView */,
-				2DB0064C2711F7BE00825BC7 /* LoadedView */,
-				2DB0066027120C2700825BC7 /* LoadingView */,
-				2DB0064F2711F7F100825BC7 /* ListView */,
-				2DB0064E2711F7E600825BC7 /* ItemImageView */,
+				2DB0070027148D9B00825BC7 /* ViewModels */,
+				2DB0070127148DAD00825BC7 /* Repositories */,
+				2DB006FF27148D9100825BC7 /* Views */,
 				2DB0064D2711F7D200825BC7 /* Helpers */,
-				2DB006322711E13400825BC7 /* ViewModel.swift */,
-				2DB0065A271204BA00825BC7 /* ImageViewModel.swift */,
-				2DB006E42714267200825BC7 /* Image API */,
-				2DB0067E2712F50600825BC7 /* Feed API */,
-				2DB006E02714264200825BC7 /* HTTPClient */,
-				2DB0066427120CA700825BC7 /* Models */,
 				2DB006102711954600825BC7 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -266,14 +255,6 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		2DB0064E2711F7E600825BC7 /* ItemImageView */ = {
-			isa = PBXGroup;
-			children = (
-				2DB0062C2711DD4400825BC7 /* ItemImageView.swift */,
-			);
-			path = ItemImageView;
-			sourceTree = "<group>";
-		};
 		2DB0064F2711F7F100825BC7 /* ListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,38 +262,6 @@
 				2DB0066127120C5B00825BC7 /* ListItem.swift */,
 			);
 			path = ListView;
-			sourceTree = "<group>";
-		};
-		2DB006502711F80A00825BC7 /* MainView */ = {
-			isa = PBXGroup;
-			children = (
-				2DB0063B2711E20300825BC7 /* MainView.swift */,
-			);
-			path = MainView;
-			sourceTree = "<group>";
-		};
-		2DB0065E27120C1300825BC7 /* SideBarView */ = {
-			isa = PBXGroup;
-			children = (
-				2DB006512711FD9E00825BC7 /* SideBarView.swift */,
-			);
-			path = SideBarView;
-			sourceTree = "<group>";
-		};
-		2DB0065F27120C1D00825BC7 /* ErrorView */ = {
-			isa = PBXGroup;
-			children = (
-				2DB00654271200C600825BC7 /* ErrorView.swift */,
-			);
-			path = ErrorView;
-			sourceTree = "<group>";
-		};
-		2DB0066027120C2700825BC7 /* LoadingView */ = {
-			isa = PBXGroup;
-			children = (
-				2DB006572712010A00825BC7 /* LoadingView.swift */,
-			);
-			path = LoadingView;
 			sourceTree = "<group>";
 		};
 		2DB0066427120CA700825BC7 /* Models */ = {
@@ -338,13 +287,10 @@
 		2DB006872712F8FE00825BC7 /* PracticalExampleTests_macOS */ = {
 			isa = PBXGroup;
 			children = (
+				2DB006FD27148D2100825BC7 /* ViewModels */,
+				2DB006FE27148D3A00825BC7 /* Repositories */,
 				2DB006972713374F00825BC7 /* Helpers */,
 				2DB0069C27134C1300825BC7 /* Stubs */,
-				2DB006F727143A1400825BC7 /* ImageViewModelTests.swift */,
-				2DB00691271309DA00825BC7 /* RemoteFeedLoaderTests.swift */,
-				2DB006EE2714295A00825BC7 /* RemoteImageLoaderTests.swift */,
-				2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */,
-				2DB00698271337A200825BC7 /* ViewModelTests.swift */,
 			);
 			path = PracticalExampleTests_macOS;
 			sourceTree = "<group>";
@@ -395,6 +341,60 @@
 				2DB006E82714271000825BC7 /* MainQueueRemoteImageLoader.swift */,
 			);
 			path = "Image API";
+			sourceTree = "<group>";
+		};
+		2DB006FD27148D2100825BC7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2DB006F727143A1400825BC7 /* ImageViewModelTests.swift */,
+				2DB00698271337A200825BC7 /* ViewModelTests.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2DB006FE27148D3A00825BC7 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				2DB00691271309DA00825BC7 /* RemoteFeedLoaderTests.swift */,
+				2DB006EE2714295A00825BC7 /* RemoteImageLoaderTests.swift */,
+				2DB0068F2712F92600825BC7 /* URLSessionHTTPClientTests.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		2DB006FF27148D9100825BC7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2DB0063B2711E20300825BC7 /* MainView.swift */,
+				2DB0064F2711F7F100825BC7 /* ListView */,
+				2DB0064B2711F7B400825BC7 /* ContentView */,
+				2DB0064C2711F7BE00825BC7 /* LoadedView */,
+				2DB006512711FD9E00825BC7 /* SideBarView.swift */,
+				2DB006572712010A00825BC7 /* LoadingView.swift */,
+				2DB0062C2711DD4400825BC7 /* ItemImageView.swift */,
+				2DB00654271200C600825BC7 /* ErrorView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2DB0070027148D9B00825BC7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2DB006322711E13400825BC7 /* ViewModel.swift */,
+				2DB0065A271204BA00825BC7 /* ImageViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2DB0070127148DAD00825BC7 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				2DB006E42714267200825BC7 /* Image API */,
+				2DB0067E2712F50600825BC7 /* Feed API */,
+				2DB006E02714264200825BC7 /* HTTPClient */,
+				2DB0066427120CA700825BC7 /* Models */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

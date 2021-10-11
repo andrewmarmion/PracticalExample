@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2DB006852712F8FE00825BC7"
-               BuildableName = "PracticalExampleTests.xctest"
+               BuildableName = "PracticalExampleTests_macOS.xctest"
                BlueprintName = "PracticalExampleTests_macOS"
                ReferencedContainer = "container:PracticalExample.xcodeproj">
             </BuildableReference>
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2DB006BA2713500F00825BC7"
+               BlueprintIdentifier = "2DB006C72713507200825BC7"
                BuildableName = "PracticalExampleTests_iOS.xctest"
                BlueprintName = "PracticalExampleTests_iOS"
                ReferencedContainer = "container:PracticalExample.xcodeproj">
