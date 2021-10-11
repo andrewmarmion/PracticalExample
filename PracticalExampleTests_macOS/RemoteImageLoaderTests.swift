@@ -12,6 +12,19 @@ final class RemoteImageLoaderTests: XCTestCase {
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
 
+    func test_load_requestsDataFromURL() {
+        let imageURL = anyURL()
+        let (sut, client) = makeSUT()
+
+        sut
+            .load(url: imageURL)
+            .sink { _ in } receiveValue: { _ in }
+            .store(in: &cancellables)
+
+        XCTAssertEqual(client.requestedURLs, [imageURL])
+    }
+    
+
     // MARK: - Helpers
 
     private func makeSUT(
