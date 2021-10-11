@@ -21,6 +21,7 @@ struct LoadedView: View {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
             }
 
             ListView(items: viewModel.items)
