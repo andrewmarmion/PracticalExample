@@ -23,7 +23,25 @@ final class RemoteImageLoaderTests: XCTestCase {
 
         XCTAssertEqual(client.requestedURLs, [imageURL])
     }
-    
+
+    func test_loadTwice_requestsDataFromURLs() {
+        let imageURL1 = anyURL()
+        let imageURL2 = anotherURL()
+        let (sut, client) = makeSUT()
+
+        sut
+            .load(url: imageURL1)
+            .sink { _ in } receiveValue: { _ in }
+            .store(in: &cancellables)
+
+        sut
+            .load(url: imageURL2)
+            .sink { _ in } receiveValue: { _ in }
+            .store(in: &cancellables)
+
+        XCTAssertEqual(client.requestedURLs, [imageURL1, imageURL2])
+
+    }
 
     // MARK: - Helpers
 

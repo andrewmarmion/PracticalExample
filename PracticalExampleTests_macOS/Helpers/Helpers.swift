@@ -11,6 +11,10 @@ func anyURL() -> URL {
     URL(string: "https://any-url.com")!
 }
 
+func anotherURL() -> URL {
+    URL(string: "https://another-url.com")!
+}
+
 func anyData() -> Data {
     Data("any data".utf8)
 }
