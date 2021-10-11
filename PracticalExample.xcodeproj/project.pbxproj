@@ -186,6 +186,7 @@
 		2DB006082711954300825BC7 = {
 			isa = PBXGroup;
 			children = (
+				2DB006D9271373F500825BC7 /* README.md */,
 				2DB0060D2711954300825BC7 /* Shared */,
 				2DB0061C2711954600825BC7 /* macOS */,
 				2DB006872712F8FE00825BC7 /* PracticalExampleTests_macOS */,
@@ -197,7 +198,6 @@
 		2DB0060D2711954300825BC7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				2DB006D9271373F500825BC7 /* README.md */,
 				2DB0060E2711954300825BC7 /* PracticalExampleApp.swift */,
 				2DB0065E27120C1300825BC7 /* SideBarView */,
 				2DB0064B2711F7B400825BC7 /* ContentView */,
