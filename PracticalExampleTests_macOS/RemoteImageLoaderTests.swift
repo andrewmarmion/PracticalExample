@@ -61,7 +61,18 @@ final class RemoteImageLoaderTests: XCTestCase {
     }
 
 
-    
+    func test_load_deliversNilOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        let samples = [199, 201, 300, 400, 500]
+        let imageURL = anyURL()
+
+        samples.forEach { code in
+            expect(sut, imageURL: imageURL, toCompleteWith: nil) {
+                let clientResponse = HTTPURLResponse(url: imageURL, statusCode: code, httpVersion: nil, headerFields: nil)!
+                client.stubbedResponse = HTTPClientStub.publishesDataResponse(data: anyData(), response: clientResponse)
+            }
+        }
+    }
 
     // MARK: - Helpers
 
