@@ -29,15 +29,9 @@ struct ItemImageView: View {
     @ViewBuilder
     private var image: some View {
         if let image = loader.image {
-            #if os(iOS)
-            Image(uiImage: image)
+            Image(peImage: image)
                 .resizable()
                 .scaledToFit()
-            #elseif os(macOS)
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFit()
-            #endif
         } else {
             ZStack {
                 ProgressView()
@@ -45,5 +39,15 @@ struct ItemImageView: View {
             }
         }
 
+    }
+}
+
+private extension Image {
+    init(peImage: PEImage) {
+        #if os(iOS)
+        self.init(uiImage: peImage)
+        #elseif os(macOS)
+        self.init(nsImage: peImage)
+        #endif
     }
 }
