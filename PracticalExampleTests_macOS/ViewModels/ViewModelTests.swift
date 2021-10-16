@@ -4,6 +4,8 @@ import XCTest
 
 final class ViewModelTests: XCTestCase {
 
+    private var cancellables = Set<AnyCancellable>()
+
     func test_init_initialState() {
         let sut = makeSUT()
 
@@ -15,7 +17,7 @@ final class ViewModelTests: XCTestCase {
     func test_load_errorInFeedLoaderCreatesErrorState() {
         let sut = makeSUT(stubbedResponse: StubbedFeedLoader.publishesErrorResponse())
 
-        sut.load()
+        expect(sut, loadsWith: [.empty, .loading, .error(anyNSError())])
 
         XCTAssertEqual(sut.state, .error(anyNSError()))
         XCTAssertEqual(sut.items, [])
@@ -25,9 +27,8 @@ final class ViewModelTests: XCTestCase {
     func test_load_successInFeedLoaderWithEmptyListsCreatesLoadedState() {
         let sut = makeSUT()
 
-        sut.load()
+        expect(sut, loadsWith: [.empty, .loading, .loaded])
 
-        XCTAssertEqual(sut.state, .loaded)
         XCTAssertEqual(sut.items, [])
         XCTAssertEqual(sut.selectedList, .all)
     }
@@ -42,9 +43,8 @@ final class ViewModelTests: XCTestCase {
         let stubbedResponse = StubbedFeedLoader.publishesSuccessResponse(articles: articles, videos: [])
         let sut = makeSUT(stubbedResponse: stubbedResponse)
 
-        sut.load()
+        expect(sut, loadsWith: [.empty, .loading, .loaded])
 
-        XCTAssertEqual(sut.state, .loaded)
         XCTAssertEqual(sut.items, [article1, article2])
     }
 
@@ -57,9 +57,8 @@ final class ViewModelTests: XCTestCase {
         let stubbedResponse = StubbedFeedLoader.publishesSuccessResponse(articles: [], videos: videos)
         let sut = makeSUT(stubbedResponse: stubbedResponse)
 
-        sut.load()
+        expect(sut, loadsWith: [.empty, .loading, .loaded])
 
-        XCTAssertEqual(sut.state, .loaded)
         XCTAssertEqual(sut.items, [video1, video2])
     }
 
@@ -78,9 +77,8 @@ final class ViewModelTests: XCTestCase {
         let stubbedResponse = StubbedFeedLoader.publishesSuccessResponse(articles: articles, videos: videos)
         let sut = makeSUT(stubbedResponse: stubbedResponse)
 
-        sut.load()
+        expect(sut, loadsWith: [.empty, .loading, .loaded])
 
-        XCTAssertEqual(sut.state, .loaded)
         XCTAssertEqual(sut.selectedList, .all)
         XCTAssertEqual(sut.items, [article1, article2, video1, video2, article3])
 
@@ -92,7 +90,6 @@ final class ViewModelTests: XCTestCase {
 
         sut.selectedList = .all
         XCTAssertEqual(sut.items, [article1, article2, video1, video2, article3])
-
     }
 
     // MARK: - Helpers
@@ -123,6 +120,22 @@ final class ViewModelTests: XCTestCase {
         )
     }
 
+    private func expect(
+        _ sut: ViewModel,
+        loadsWith expectedLoadingStates: [LoadingState],
+        file: StaticString = #filePath,
+        line: UInt = #line
+    )  {
+        var receivedLoadingStates: [LoadingState] = []
+        sut
+            .$state
+            .sink { loadingState in
+                receivedLoadingStates.append(loadingState)
+            }
+            .store(in: &cancellables)
+
+        sut.load()
+
+        XCTAssertEqual(expectedLoadingStates, receivedLoadingStates, file: file, line: line)
+    }
 }
-
-
